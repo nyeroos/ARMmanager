@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/menubtn" />
 
     <TextView
         android:id="@+id/textView4"
@@ -32,10 +32,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/currentRequestRV" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/currentRequestRV"
         android:layout_width="380dp"
         android:layout_height="280dp"
         android:layout_marginStart="8dp"
@@ -48,6 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/doneRequestRV"
         android:layout_width="380dp"
         android:layout_height="280dp"
         android:layout_marginTop="8dp"
@@ -58,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/menubtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
@@ -69,7 +70,7 @@
         app:srcCompat="@drawable/ic_menu" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/addbtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"

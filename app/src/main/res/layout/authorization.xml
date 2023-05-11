@@ -68,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
         android:text="Авторизация"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
