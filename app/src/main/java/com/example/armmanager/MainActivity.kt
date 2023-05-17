@@ -11,36 +11,39 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.armmanager.databinding.ActivityMainMenuBinding
+import androidx.navigation.fragment.NavHostFragment
+import com.example.armmanager.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainMenuBinding
+  private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainMenuBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarMainActivityMenu.toolbar)
+     //setSupportActionBar(binding.appBarMainActivityMenu)
 
-        binding.appBarMainActivityMenu.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-        val drawerLayout: DrawerLayout = binding.drawerLayout
+//        binding.appBarMainActivityMenu.addbtn.setOnClickListener { view ->
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+//        }
+       val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main_activity_menu)
-        // Passing each menu ID as a set of Ids because each
+       val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main_activity_menu) as NavHostFragment
+       val navController = navHostFragment.navController
+          // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_request, R.id.nav_anal, R.id.nav_status, R.id.nav_account, R.id.nav_exit
             ), drawerLayout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
@@ -50,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+   override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main_activity_menu)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }

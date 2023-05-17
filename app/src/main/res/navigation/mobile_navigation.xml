@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/requestFragment">
+    <fragment
+        android:id="@+id/requestFragment"
+        android:name="com.example.armmanager.ui.request.RequestFragment"
+        android:label="RequestFragment" >
+        <action
+            android:id="@+id/action_requestFragment_to_statusFragment"
+            app:destination="@id/statusFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/statusFragment"
+        android:name="com.example.armmanager.ui.status.StatusFragment"
+        android:label="StatusFragment" />
+</navigation>
