@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import com.example.armmanager.R
 import com.example.armmanager.databinding.FragmentRequestBinding
 
 class RequestFragment : Fragment() {
@@ -21,12 +24,18 @@ class RequestFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         val requestViewModel =
             ViewModelProvider(this).get(RequestViewModel::class.java)
+        _binding = FragmentRequestBinding.inflate(layoutInflater)
+        binding.addbtn.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                Navigation.findNavController(v).navigate(R.id.action_nav_request_to_addRequestFragment)
+            }
+        })
 
-        _binding = FragmentRequestBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        //binding = FragmentRequestBinding.inflate(inflater, container, false)
+        val root: View = binding!!.root
 
 //        val textView: TextView = binding.textView4 //????
 //        requestViewModel.text.observe(viewLifecycleOwner) {

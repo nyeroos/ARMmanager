@@ -26,9 +26,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-     //setSupportActionBar(binding.appBarMainActivityMenu)
+        setSupportActionBar(binding.appBarMainActivityMenu.toolbar)
 
-//        binding.appBarMainActivityMenu.addbtn.setOnClickListener { view ->
+//        binding.appBarMainActivityMenu.fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 //        }
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_request, R.id.nav_anal, R.id.nav_status, R.id.nav_account, R.id.nav_exit
             ), drawerLayout
         )
-        //setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
