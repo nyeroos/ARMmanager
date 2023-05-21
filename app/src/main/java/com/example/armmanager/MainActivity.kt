@@ -56,7 +56,6 @@ class MainActivity : DaggerAppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

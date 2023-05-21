@@ -12,7 +12,9 @@ interface ArmService {
 //    fun getUser(@Path("login") login: String): LiveData<ApiResponse<User>>
 
     @GET("users/{login}/repos")
-    fun getRequest(@Path("login") login: String): LiveData<ApiResponse<List<Request>>>
+    fun getRequest(@Path("login") login: String,
+                   @Path("login") huegin: String
+                    ): LiveData<ApiResponse<List<Request>>>
 
     @GET("repos/{owner}/{name}")
     fun getRepo(

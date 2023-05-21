@@ -1,11 +1,16 @@
 package com.example.armmanager.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.armmanager.AppExecutors
 import com.example.armmanager.api.ArmService
+import com.example.armmanager.database.ArmRoomDatabase
 import com.example.armmanager.database.RequestDAO
 import com.example.armmanager.vo.Request
 import com.example.armmanager.vo.Resource
+import android.content.Context
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,24 +31,34 @@ class RequestRepository @Inject constructor(
 
             override fun loadFromDb() = requestDAO.getRequests()
 
-            override fun createCall() = armService.getRequest("")
+            override fun createCall() = armService.getRequest("", "")
         }.asLiveData()
     }
 
-    suspend fun insertRequest() {
+    suspend fun insertRequest(request: Request) {
         //Отправка запроса на сервер, при положительном ответе вставка в БД. Либо вызов обновления всего списка с сервера
-        requestDAO.insert(
-            Request(
-                0,
-                1,
-                "Test",
-                "TestCustomer",
-                "22.12.2022",
-                "21.11.2022",
-                "20.05.2023",
-                1,
-                "1"
-            )
-        )
+
+
+        requestDAO.insert(request)
+//            Request(
+//                0,
+//                1,
+//                "Test тфьу",
+//                "TestCustomer",
+//                "22.12.2022",
+//                "21.11.2022",
+//                "20.05.2023",
+//                1,
+//                "Хуятус"
+//            )
+//        )
+    }
+
+    suspend fun getRequestCount(): Int {
+        return requestDAO.getRequestCount()
+    }
+
+    suspend fun deleteAll() {
+        requestDAO.deleteAll()
     }
 }

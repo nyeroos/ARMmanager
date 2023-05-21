@@ -14,6 +14,7 @@ import com.example.armmanager.AppExecutors
 import com.example.armmanager.R
 import com.example.armmanager.databinding.FragmentRequestBinding
 import com.example.armmanager.di.Injectable
+import com.example.armmanager.ui.add.AddRequestViewModel
 import com.example.armmanager.vo.Status
 import javax.inject.Inject
 
@@ -26,6 +27,7 @@ class RequestFragment : Fragment(), Injectable {
     lateinit var appExecutors: AppExecutors
 
     private val requestViewModel: RequestViewModel by viewModels { viewModelFactory }
+    //private val addRequestViewModel: AddRequestViewModel by viewModels { viewModelFactory }
 
     private var _binding: FragmentRequestBinding? = null
     private lateinit var adapter: RequestAdapter // Объект Adapter
@@ -58,10 +60,11 @@ class RequestFragment : Fragment(), Injectable {
         super.onViewCreated(view, savedInstanceState)
         val manager = LinearLayoutManager(context) // LayoutManager
         adapter = RequestAdapter() // Создание объекта
-        binding.currentRequestRV.layoutManager =
-            manager // Назначение LayoutManager для RecyclerView
+        binding.currentRequestRV.layoutManager = manager // Назначение LayoutManager для RecyclerView
         binding.currentRequestRV.adapter = adapter // Назначение адаптера для RecyclerView
-        requestViewModel.log()
+        //addRequestViewModel.log()
+        requestViewModel.log1()
+        //requestViewModel.log2()
         requestViewModel.requests.observe(viewLifecycleOwner, Observer { requestsResponse ->
             if (requestsResponse.status == Status.SUCCESS && requestsResponse.data != null)
                 adapter.setData(requestsResponse.data)

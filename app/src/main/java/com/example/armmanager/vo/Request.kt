@@ -4,12 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//data class Request(
-//    val number: Int,
-//    val name: String,
-//    val status: String
-//)
-
 @Entity(tableName = "request_table")
 class Request(
     @PrimaryKey(autoGenerate = true)

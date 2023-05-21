@@ -19,4 +19,7 @@ interface RequestDAO {
     @Query("DELETE FROM request_table")
     suspend fun deleteAll()
 
+    @Query("SELECT COUNT(*) FROM request_table")
+    suspend fun getRequestCount(): Int
+
 }

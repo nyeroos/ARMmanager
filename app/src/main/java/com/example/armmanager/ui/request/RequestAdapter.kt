@@ -20,7 +20,7 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
 
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.name)
+        holder.bind(current.number, current.name, current.status)
 
     }
 
@@ -31,9 +31,13 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
 
     class RequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val requestItemView: TextView = itemView.findViewById(R.id.numRequestRV) //?
+        private val requestItemView2: TextView = itemView.findViewById(R.id.nameRequestRV)
+        private val requestItemView3: TextView = itemView.findViewById(R.id.statusRequestRV)
 
-        fun bind(text: String?) {
-            requestItemView.text = text
+        fun bind(number: Int?, name: String, status: String) {
+            requestItemView.text = number.toString()
+            requestItemView2.text = name
+            requestItemView3.text = status
         }
 
         companion object {
@@ -51,7 +55,7 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
         }
 
         override fun areContentsTheSame(oldItem: Request, newItem: Request): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.id == newItem.id
         }
     }
 }
