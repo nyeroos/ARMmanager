@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.armmanager.AppExecutors
+import com.example.armmanager.R
 import com.example.armmanager.databinding.AddRequestBinding
 import com.example.armmanager.di.Injectable
 import com.example.armmanager.ui.request.RequestAdapter
@@ -41,17 +44,42 @@ class AddRequestFragment: Fragment(), Injectable {
     ): View? {
         binding = AddRequestBinding.inflate(layoutInflater)
 
-        //editWordView = binding.editTextDate
-        //val button = binding.button6
+        // access the items of the list
+        val statuses = resources.getStringArray(R.array.statuses_array)
 
-        binding.savebtn.setOnClickListener {
+        // access the spinner
+        val spinner = binding.spinner
+        if (spinner != null) {
+            val adapter = ArrayAdapter(requireContext(),
+                android.R.layout.simple_spinner_item, statuses)
+            spinner.adapter = adapter
+
+            spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                   val status = statuses[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+            }
+        }
+
+
+            binding.savebtn.setOnClickListener {
             val requestId = 0
             val requestNumber = binding.numberRequestET.text.toString().toInt()
             val requestName = binding.nameRequestET.text.toString()
             val requestDate = binding.creationDateET.text.toString()
             val customer = binding.customerET.text.toString()
             val planDate = binding.planDateET.text.toString()
-            val status = binding.statusCT.text.toString()
+            val status = statuses[spinner.selectedItemPosition]
             val factDate = binding.factDateET.text.toString()
             val user = 1
             if (requestName.isNotEmpty()) {
@@ -61,9 +89,6 @@ class AddRequestFragment: Fragment(), Injectable {
                     viewModel.insertRequest(request)
                 }
             }
-//            fun log() = viewModelScope.launch {
-//                viewModel.insertRequest(request)
-//            }
             findNavController().navigateUp()
         }
 

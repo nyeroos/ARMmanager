@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="statuses_array">
+        <item>Создан</item>
+        <item>В работе</item>
+        <item>Выполнен</item>
+    </string-array>
+</resources>
