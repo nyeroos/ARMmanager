@@ -37,11 +37,11 @@ class MainActivity : DaggerAppCompatActivity() {
 
         setSupportActionBar(binding.appBarMainActivityMenu.toolbar)
 
-
 //        binding.appBarMainActivityMenu.fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 //        }
+
        val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main_activity_menu) as NavHostFragment
@@ -50,11 +50,13 @@ class MainActivity : DaggerAppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_request, R.id.nav_anal, R.id.nav_status, R.id.nav_account, R.id.nav_exit
+               R.id.item_1,R.id.item_2, R.id.nav_anal, R.id.nav_status, R.id.nav_account, R.id.nav_exit
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        binding.bottomNavigation.setupWithNavController(navController)
 
     }
 

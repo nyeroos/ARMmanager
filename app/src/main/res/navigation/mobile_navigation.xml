@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_request">
-    <fragment
-        android:id="@+id/nav_request"
-        android:name="com.example.armmanager.ui.request.RequestFragment"
-        android:label="Заявки"
-        tools:layout="@layout/fragment_request">
-        <action
-            android:id="@+id/action_nav_request_to_addRequestFragment"
-            app:destination="@id/addRequestFragment" />
-    </fragment>
+    app:startDestination="@id/item_1">
 
     <fragment
         android:id="@+id/addRequestFragment"
         android:name="com.example.armmanager.ui.add.AddRequestFragment"
-        android:label="AddRequestFragment"
+        android:label="Добавить заявку"
+        tools:layout="@layout/add_request"
+        />
+    <fragment
+        android:id="@+id/editRequestFragment"
+        android:name="com.example.armmanager.ui.edit.EditRequestFragment"
+        android:label="Редактировать"
         tools:layout="@layout/add_request"/>
+
+
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_anal"-->
@@ -36,6 +35,23 @@
         android:name="com.example.armmanager.ui.account.AccountFragment"
         android:label="Аккаунт"
         tools:layout="@layout/account"/>
+    <fragment
+        android:id="@+id/item_2"
+        android:name="com.example.armmanager.ui.request.complete.CompleteRequestFragment"
+        android:label="Выполненные заявки"
+        tools:layout="@layout/fragment_complete_request"/>
+    <fragment
+        android:id="@+id/item_1"
+        android:name="com.example.armmanager.ui.request.work.WorkRequestFragment"
+        android:label="В работе"
+        tools:layout="@layout/fragment_work_request">
+        <action
+            android:id="@+id/action_workRequestFragment_to_addRequestFragment"
+            app:destination="@id/addRequestFragment" />
+        <action
+            android:id="@+id/action_workRequestFragment_to_editRequestFragment"
+            app:destination="@id/editRequestFragment" />
+    </fragment>
 
 
 </navigation>

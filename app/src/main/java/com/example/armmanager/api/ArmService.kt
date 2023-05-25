@@ -3,18 +3,18 @@ package com.example.armmanager.api
 import androidx.lifecycle.LiveData
 import com.example.armmanager.vo.Request
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.Response
+import retrofit2.http.*
 
 interface ArmService {
 //    @GET("users/{login}")
 //    fun getUser(@Path("login") login: String): LiveData<ApiResponse<User>>
 
     @GET("users/{login}/repos")
-    fun getRequest(@Path("login") login: String,
-                   @Path("login") huegin: String
-                    ): LiveData<ApiResponse<List<Request>>>
+    fun getRequest(@Path("login") login: String): LiveData<ApiResponse<List<Request>>>
+
+    @PUT("requests/{id}")
+    suspend fun updateRequest(@Path("id") id: Int, @Body request:Request): Response<Request>
 
     @GET("repos/{owner}/{name}")
     fun getRepo(

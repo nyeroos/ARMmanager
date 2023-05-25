@@ -12,39 +12,60 @@ import com.example.armmanager.vo.Request
 
 class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(RequestsComparator()) {
 
+    private var listener: OnItemClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RequestViewHolder {
-//        val inflater = LayoutInflater.from(parent.context)
-//        val binding = ItemRequestBinding.inflate(inflater, parent, false)
-        return RequestViewHolder.create(parent)
+        return RequestViewHolder.create(parent, listener)
     }
 
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.number, current.name, current.status)
+        holder.bind(current)
 
     }
 
     fun setData(newRequests: List<Request>) {
         submitList(newRequests)
-        notifyDataSetChanged()
+        //notifyDataSetChanged()
     }
 
-    class RequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface OnItemClickListener {
+        fun onItemClick(request: Request)
+    }
+
+//    override fun onItemClick(request: Request) {
+//        val action = RequestFragmentDirections.actionNavRequestToEditRequestFragment(request)
+//        Navigation.findNavController(view).navigate(action)
+//    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
+    class RequestViewHolder(itemView: View, private val listener: OnItemClickListener?) : RecyclerView.ViewHolder(itemView) {
         private val requestItemView: TextView = itemView.findViewById(R.id.numRequestRV) //?
         private val requestItemView2: TextView = itemView.findViewById(R.id.nameRequestRV)
         private val requestItemView3: TextView = itemView.findViewById(R.id.statusRequestRV)
 
-        fun bind(number: Int?, name: String, status: String) {
-            requestItemView.text = number.toString()
-            requestItemView2.text = name
-            requestItemView3.text = status
+        fun bind(request: Request) {
+            requestItemView.text = request.number.toString()
+            requestItemView2.text = request.name
+            requestItemView3.text = request.status
+
+            itemView.setOnClickListener {
+                listener?.onItemClick(request)
+            }
+
+            if (request.status =="TTTT"){
+               // itemView.setBackgroundColor()
+            }
         }
 
         companion object {
-            fun create(parent: ViewGroup): RequestViewHolder {
+            fun create(parent: ViewGroup, listener: OnItemClickListener?): RequestViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_request, parent, false)
-                return RequestViewHolder(view)
+                return RequestViewHolder(view, listener)
             }
         }
     }
@@ -60,3 +81,8 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
     }
 }
 
+
+
+//itemView.setOnClickListener {
+//    listener?.onItemClick(request) // listener?
+//}

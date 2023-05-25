@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#6ACEC8">
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
@@ -41,7 +40,6 @@
         android:layout_marginTop="64dp"
         android:backgroundTint="#A0B1B0"
         android:text="Войти"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +52,6 @@
         android:layout_marginTop="36dp"
         android:backgroundTint="#A0B1B0"
         android:text="Первый раз?"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
@@ -68,7 +65,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
         android:text="Авторизация"
-        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,7 +2,10 @@ package com.example.armmanager.di
 
 import com.example.armmanager.ui.account.AccountFragment
 import com.example.armmanager.ui.add.AddRequestFragment
+import com.example.armmanager.ui.edit.EditRequestFragment
 import com.example.armmanager.ui.request.RequestFragment
+import com.example.armmanager.ui.request.complete.CompleteRequestFragment
+import com.example.armmanager.ui.request.work.WorkRequestFragment
 import com.example.armmanager.ui.status.StatusFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -14,6 +17,12 @@ abstract class FragmentBuildersModule {
     abstract fun contributeRequestFragment(): RequestFragment
 
     @ContributesAndroidInjector
+    abstract fun contributeCompleteRequestFragment(): CompleteRequestFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeWorkRequestFragment(): WorkRequestFragment
+
+    @ContributesAndroidInjector
     abstract fun contributeAccountFragment(): AccountFragment
 
     @ContributesAndroidInjector
@@ -21,7 +30,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeStatusFragment(): StatusFragment
-
+    @ContributesAndroidInjector
+    abstract fun contributeEditRequestFragment(): EditRequestFragment
 //    @ContributesAndroidInjector
 //    abstract fun contributeSearchFragment(): SearchFragment
 }

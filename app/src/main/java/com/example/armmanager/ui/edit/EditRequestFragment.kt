@@ -1,4 +1,4 @@
-package com.example.armmanager.ui.add
+package com.example.armmanager.ui.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,20 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.armmanager.AppExecutors
 import com.example.armmanager.R
 import com.example.armmanager.databinding.AddRequestBinding
 import com.example.armmanager.di.Injectable
+import com.example.armmanager.ui.add.AddRequestViewModel
+import com.example.armmanager.ui.request.RequestViewModel
 import com.example.armmanager.vo.Request
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.navigation.fragment.findNavController
 import javax.inject.Inject
 
-class AddRequestFragment : Fragment(), Injectable {
+class EditRequestFragment : Fragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -28,19 +30,18 @@ class AddRequestFragment : Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    private val viewModel: AddRequestViewModel by viewModels() { viewModelFactory }
+    private val viewModel: AddRequestViewModel by viewModels { viewModelFactory }
 
     private lateinit var binding: AddRequestBinding
+    private lateinit var currentRequest: Request
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding = AddRequestBinding.inflate(layoutInflater)
+        binding = AddRequestBinding.inflate(inflater)
 
-        // access the items of the list
         val statuses = resources.getStringArray(R.array.statuses_array)
 
-        // access the spinner
         val spinner = binding.spinner
         if (spinner != null) {
             val adapter = ArrayAdapter(
@@ -61,10 +62,23 @@ class AddRequestFragment : Fragment(), Injectable {
             }
         }
 
+        arguments?.let {
+            currentRequest = it.getParcelable("request")
+                ?: throw IllegalArgumentException("Request object is null")
+            currentRequest?.let {
+                binding.numberRequestET.setText(currentRequest.number.toString())
+                binding.nameRequestET.setText(currentRequest.name)
+                binding.customerET.setText(currentRequest.customer)
+                binding.creationDateET.setText(currentRequest.creationDate)
+                binding.planDateET.setText(currentRequest.expectedDate)
+                binding.factDateET.setText(currentRequest.actualDate)
+                binding.spinner.setSelection(statuses.indexOf(currentRequest.status))
+            }
+        }
 
         binding.savebtn.setOnClickListener {
-            val requestId = 0
-            val requestNumber = binding.numberRequestET.text.toString().toIntOrNull() ?: 0
+            val requestId = currentRequest.id
+            val requestNumber = binding.numberRequestET.text.toString().toInt()
             val requestName = binding.nameRequestET.text.toString()
             val requestDate = binding.creationDateET.text.toString()
             val customer = binding.customerET.text.toString()
@@ -73,7 +87,7 @@ class AddRequestFragment : Fragment(), Injectable {
             val factDate = binding.factDateET.text.toString()
             val user = 1
             if (requestName.isNotEmpty()) {
-                var request = Request(
+                val updatedRequest = Request(
                     requestId,
                     requestNumber,
                     requestName,
@@ -86,7 +100,7 @@ class AddRequestFragment : Fragment(), Injectable {
                 )
                 val coroutineScope = CoroutineScope(Dispatchers.Main)
                 coroutineScope.launch {
-                    viewModel.insertRequest(request)
+                    viewModel.updateRequest(updatedRequest)
                 }
             }
             findNavController().navigateUp()
@@ -94,27 +108,4 @@ class AddRequestFragment : Fragment(), Injectable {
 
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        val manager = LinearLayoutManager(context) // LayoutManager
-//        adapter = RequestAdapter() // Создание объекта
-//        binding.currentRequestRV.layoutManager = manager // Назначение LayoutManager для RecyclerView
-//        binding.currentRequestRV.adapter = adapter // Назначение адаптера для RecyclerView
-//        //addRequestViewModel.log()
-//        requestViewModel.log1()
-//        //requestViewModel.log2()
-//        requestViewModel.requests.observe(viewLifecycleOwner, Observer { requestsResponse ->
-//            if (requestsResponse.status == Status.SUCCESS && requestsResponse.data != null)
-//                adapter.setData(requestsResponse.data)
-//        })
-//        /* viewModel.allRequests.observe(viewLifecycleOwner) { requests ->
-//             adapter.setData(requests.toMutableList())
-//         }*/
-    }
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        binding = null
-//    }
 }

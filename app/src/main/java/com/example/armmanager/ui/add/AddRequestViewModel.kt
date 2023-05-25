@@ -12,6 +12,9 @@ class AddRequestViewModel @Inject constructor(private val requestRepository: Req
     suspend fun insertRequest(request: Request) {
         requestRepository.insertRequest(request)
     }
-//    fun log() = viewModelScope.launch { requestRepository.insertRequest() }
+
+    suspend fun updateRequest(request: Request) {
+        requestRepository.updateRequest(request)
+    }
 
 }
