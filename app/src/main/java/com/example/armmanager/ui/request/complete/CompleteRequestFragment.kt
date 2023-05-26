@@ -70,7 +70,7 @@ class CompleteRequestFragment : Fragment(), Injectable {
         //addRequestViewModel.log()
         requestViewModel.log1()
         //requestViewModel.log2()
-        requestViewModel.requests.observe(viewLifecycleOwner, Observer { requestsResponse ->
+        requestViewModel.completerequests.observe(viewLifecycleOwner, Observer { requestsResponse ->
             if (requestsResponse.status == Status.SUCCESS && requestsResponse.data != null)
                 adapter.setData(requestsResponse.data)
         })

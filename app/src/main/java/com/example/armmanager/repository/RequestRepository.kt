@@ -10,7 +10,9 @@ import com.example.armmanager.vo.Resource
 import android.content.Context
 import com.example.armmanager.api.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,6 +37,20 @@ class RequestRepository @Inject constructor(
         }.asLiveData()
     }
 
+    fun getCompleteRequest(login: String): LiveData<Resource<List<Request>>> {
+        return object : NetworkBoundResource<List<Request>, List<Request>>(appExecutors) {
+            override fun saveCallResult(items: List<Request>) {
+                //requestDAO.insert(item)
+            }
+
+            override fun shouldFetch(data: List<Request>?) = data == null
+
+            override fun loadFromDb() = requestDAO.getCompletedRequests()
+
+            override fun createCall() = armService.getRequest("")
+        }.asLiveData()
+    }
+
     suspend fun insertRequest(request: Request) {
         //Отправка запроса на сервер, при положительном ответе вставка в БД. Либо вызов обновления всего списка с сервера
 
@@ -44,22 +60,17 @@ class RequestRepository @Inject constructor(
     suspend fun updateRequest(request: Request) {
         //Отправка запроса на сервер, при положительном ответе обновление записи в БД. Либо вызов обновления всего списка с сервера
 
-        // Отправляем запрос на сервер для обновления записи
-        val response = armService.updateRequest(request.id, request)
+        requestDAO.update(request)
 
-        // Если запрос успешен, обновляем запись в БД
-        if (response.isSuccessful) {
-            requestDAO.update(request)
-        } else {
-            // Если запрос неуспешен, мы можем обработать ошибку соответствующим образом
-            // ...
-        }
-
+//        // Отправляем запрос на сервер для обновления записи
+//        val response = armService.updateRequest(request.id, request)
+//
+//
 //        // Обрабатываем ответ сервера
 //        when (val apiResponse = ApiResponse.create(response)) {
 //            is ApiSuccessResponse -> {
 //                // Если запрос успешен, обновляем запись в БД
-//                appExecutors.diskIO().execute {
+//                withContext(Dispatchers.IO) {
 //                    requestDAO.update(request)
 //                }
 //            }

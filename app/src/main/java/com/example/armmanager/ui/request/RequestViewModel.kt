@@ -12,6 +12,8 @@ class RequestViewModel @Inject constructor(private val requestRepository: Reques
 
     val requests: LiveData<Resource<List<Request>>> = requestRepository.getRequests("")
 
+    val completerequests: LiveData<Resource<List<Request>>> = requestRepository.getCompleteRequest("")
+
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */

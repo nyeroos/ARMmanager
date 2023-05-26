@@ -7,10 +7,10 @@ import com.example.armmanager.vo.Request
 @Dao
 interface RequestDAO {
 
-    @Query("SELECT * FROM request_table")
+    @Query("SELECT * FROM request_table WHERE status IN ('Создан', 'В работе')")
     fun getRequests(): LiveData<List<Request>>
 
-    @Query("SELECT * FROM request_table where status = 1")
+    @Query("SELECT * FROM request_table WHERE status = 'Выполнен'")
     fun getCompletedRequests(): LiveData<List<Request>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
