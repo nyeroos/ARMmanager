@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.armmanager.AppExecutors
 import com.example.armmanager.R
-import com.example.armmanager.databinding.FragmentRequestBinding
 import com.example.armmanager.databinding.FragmentWorkRequestBinding
 import com.example.armmanager.di.Injectable
 import com.example.armmanager.ui.request.RequestAdapter
@@ -49,6 +50,7 @@ class WorkRequestFragment : Fragment(), Injectable {
         _binding = FragmentWorkRequestBinding.inflate(layoutInflater)
         binding.fabAdd.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
+
                 Navigation.findNavController(v)
                     .navigate(R.id.action_workRequestFragment_to_addRequestFragment)
             }
@@ -63,7 +65,8 @@ class WorkRequestFragment : Fragment(), Injectable {
         super.onViewCreated(view, savedInstanceState)
         val manager = LinearLayoutManager(context) // LayoutManager
         adapter = RequestAdapter() // Создание объекта
-        binding.currentRequestRV.layoutManager = manager // Назначение LayoutManager для RecyclerView
+        binding.currentRequestRV.layoutManager =
+            manager // Назначение LayoutManager для RecyclerView
         binding.currentRequestRV.adapter = adapter // Назначение адаптера для RecyclerView
         //addRequestViewModel.log()
         requestViewModel.log1()
@@ -73,11 +76,25 @@ class WorkRequestFragment : Fragment(), Injectable {
                 adapter.setData(requestsResponse.data)
         })
 
+        binding.currentRequestRV.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0){
+                    if (binding.fabAdd.isExtended)
+                        binding.fabAdd.shrink()
+                }
+                else if (dy < 0) {
+                    if (!binding.fabAdd.isExtended)
+                        binding.fabAdd.extend()
+                }
+            }
+        })
+
         adapter.setOnItemClickListener(object : RequestAdapter.OnItemClickListener {
             override fun onItemClick(request: Request) {
-
+                var bundle = bundleOf("value" to request)
                 Navigation.findNavController(view)
-                    .navigate(R.id.action_workRequestFragment_to_editRequestFragment)
+                    .navigate(R.id.action_workRequestFragment_to_editRequestFragment, bundle)
             }
         })
     }

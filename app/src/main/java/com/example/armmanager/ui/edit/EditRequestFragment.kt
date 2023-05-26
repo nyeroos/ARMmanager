@@ -61,9 +61,8 @@ class EditRequestFragment : Fragment(), Injectable {
                 }
             }
         }
-
         arguments?.let {
-            currentRequest = it.getParcelable("request")
+            currentRequest = it.getParcelable("value")
                 ?: throw IllegalArgumentException("Request object is null")
             currentRequest?.let {
                 binding.numberRequestET.setText(currentRequest.number.toString())
@@ -75,6 +74,7 @@ class EditRequestFragment : Fragment(), Injectable {
                 binding.spinner.setSelection(statuses.indexOf(currentRequest.status))
             }
         }
+
 
         binding.savebtn.setOnClickListener {
             val requestId = currentRequest.id

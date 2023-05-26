@@ -10,6 +10,9 @@ interface RequestDAO {
     @Query("SELECT * FROM request_table")
     fun getRequests(): LiveData<List<Request>>
 
+    @Query("SELECT * FROM request_table where status = 1")
+    fun getCompletedRequests(): LiveData<List<Request>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(request: Request)
 

@@ -33,11 +33,6 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
         fun onItemClick(request: Request)
     }
 
-//    override fun onItemClick(request: Request) {
-//        val action = RequestFragmentDirections.actionNavRequestToEditRequestFragment(request)
-//        Navigation.findNavController(view).navigate(action)
-//    }
-
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
@@ -80,9 +75,3 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
         }
     }
 }
-
-
-
-//itemView.setOnClickListener {
-//    listener?.onItemClick(request) // listener?
-//}

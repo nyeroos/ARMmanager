@@ -1,17 +1,16 @@
-package com.example.armmanager.ui.status
+package com.example.armmanager.ui.product
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.armmanager.databinding.StatusBinding
+import com.example.armmanager.databinding.ProductBinding
 
-class StatusFragment : Fragment() {
+class ProductFragment : Fragment() {
 
-    private var _binding: StatusBinding? = null
+    private var _binding: ProductBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,15 +22,11 @@ class StatusFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val statusViewModel =
-            ViewModelProvider(this).get(StatusViewModel::class.java)
+            ViewModelProvider(this).get(ProductViewModel::class.java)
 
-        _binding = StatusBinding.inflate(inflater, container, false)
+        _binding = ProductBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textView6 //???
-//        statusViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 

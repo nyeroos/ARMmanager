@@ -25,10 +25,10 @@
 <!--        android:label="StatusFragment"-->
 <!--        tools:layout="@layout/"/>-->
     <fragment
-        android:id="@+id/nav_status"
-        android:name="com.example.armmanager.ui.status.StatusFragment"
-        android:label="Статусы"
-        tools:layout="@layout/status"/>
+        android:id="@+id/nav_products"
+        android:name="com.example.armmanager.ui.product.ProductFragment"
+        android:label="Продукция"
+        tools:layout="@layout/product"/>
 
     <fragment
         android:id="@+id/nav_account"
