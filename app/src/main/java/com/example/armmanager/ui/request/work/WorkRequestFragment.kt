@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.armmanager.AppExecutors
@@ -20,6 +23,7 @@ import com.example.armmanager.ui.request.RequestAdapter
 import com.example.armmanager.ui.request.RequestViewModel
 import com.example.armmanager.vo.Request
 import com.example.armmanager.vo.Status
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WorkRequestFragment : Fragment(), Injectable {
@@ -46,11 +50,9 @@ class WorkRequestFragment : Fragment(), Injectable {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentWorkRequestBinding.inflate(layoutInflater)
         binding.fabAdd.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-
                 Navigation.findNavController(v)
                     .navigate(R.id.action_workRequestFragment_to_addRequestFragment)
             }
@@ -68,9 +70,7 @@ class WorkRequestFragment : Fragment(), Injectable {
         binding.currentRequestRV.layoutManager =
             manager // Назначение LayoutManager для RecyclerView
         binding.currentRequestRV.adapter = adapter // Назначение адаптера для RecyclerView
-        //addRequestViewModel.log()
         requestViewModel.log1()
-        //requestViewModel.log2()
         requestViewModel.requests.observe(viewLifecycleOwner, Observer { requestsResponse ->
             if (requestsResponse.status == Status.SUCCESS && requestsResponse.data != null)
                 adapter.setData(requestsResponse.data)
@@ -97,11 +97,35 @@ class WorkRequestFragment : Fragment(), Injectable {
                     .navigate(R.id.action_workRequestFragment_to_editRequestFragment, bundle)
             }
         })
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                // Не реализовываем, так как не нужно
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                lifecycleScope.launch {
+                    val position = viewHolder.adapterPosition
+                    val request = adapter.currentList[position]
+                    requestViewModel.deleteRequest(request)
+                    adapter.removeItem(position)
+                }
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.currentRequestRV)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

@@ -89,6 +89,10 @@ class RequestRepository @Inject constructor(
         return requestDAO.getRequestCount()
     }
 
+    suspend fun deleteRequest(request: Request){
+        return requestDAO.deleteRequest(request)
+    }
+
     suspend fun deleteAll() {
         requestDAO.deleteAll()
     }

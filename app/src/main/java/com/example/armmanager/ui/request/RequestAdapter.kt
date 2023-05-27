@@ -37,6 +37,12 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
         this.listener = listener
     }
 
+    fun removeItem(position: Int) {
+        val currentList = currentList.toMutableList()
+        currentList.removeAt(position)
+        submitList(currentList)
+    }
+
     class RequestViewHolder(itemView: View, private val listener: OnItemClickListener?) : RecyclerView.ViewHolder(itemView) {
         private val requestItemView: TextView = itemView.findViewById(R.id.numRequestRV) //?
         private val requestItemView2: TextView = itemView.findViewById(R.id.nameRequestRV)

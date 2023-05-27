@@ -14,6 +14,10 @@ class RequestViewModel @Inject constructor(private val requestRepository: Reques
 
     val completerequests: LiveData<Resource<List<Request>>> = requestRepository.getCompleteRequest("")
 
+    suspend fun deleteRequest(request: Request) {
+        requestRepository.deleteRequest(request)
+    }
+
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
@@ -21,7 +25,7 @@ class RequestViewModel @Inject constructor(private val requestRepository: Reques
         repository.insert(request)
     }*/
 
-//    fun log() = viewModelScope.launch { requestRepository.insertRequest() }
+  //  fun log() = viewModelScope.launch { requestRepository.insertRequest() }
     fun log2() = viewModelScope.launch { requestRepository.deleteAll() }
     fun log1() = viewModelScope.launch {
         var a = requestRepository.getRequestCount()
