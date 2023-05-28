@@ -1,6 +1,7 @@
 package com.example.armmanager.api
 
 import androidx.lifecycle.LiveData
+import com.example.armmanager.vo.Product
 import com.example.armmanager.vo.Request
 import retrofit2.Call
 import retrofit2.Response
@@ -12,6 +13,12 @@ interface ArmService {
 
     @GET("users/{login}/repos")
     fun getRequest(@Path("login") login: String): LiveData<ApiResponse<List<Request>>>
+
+    @POST("")
+    fun createProduct(name: String): LiveData<ApiResponse<Product>>
+
+    @GET("users/{login}/repos")
+    fun getProduct(@Path("login") login: String): LiveData<ApiResponse<List<Product>>>
 
     @PUT("requests/{id}")
     suspend fun updateRequest(@Path("id") id: Int, @Body request:Request): Response<Request>

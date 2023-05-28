@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.armmanager.api.ArmService
 import com.example.armmanager.database.ArmRoomDatabase
+import com.example.armmanager.database.ProductDAO
 import com.example.armmanager.database.RequestDAO
 import com.example.armmanager.util.LiveDataCallAdapterFactory
 import dagger.Module
@@ -44,5 +45,11 @@ class AppModule {
     @Provides
     fun provideRequestDao(db: ArmRoomDatabase): RequestDAO {
         return db.requestDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideProductDao(db: ArmRoomDatabase): ProductDAO {
+        return db.productDao()
     }
 }

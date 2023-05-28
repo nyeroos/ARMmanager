@@ -22,4 +22,5 @@ public abstract class ArmRoomDatabase : RoomDatabase() {
 
     abstract fun requestDao(): RequestDAO
 
+    abstract fun productDao(): ProductDAO
 }
