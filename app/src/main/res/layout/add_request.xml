@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,102 +16,150 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="#A0B1B0"
             android:text="Добавить позицию"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
 
-        <EditText
-            android:id="@+id/numberRequestET"
-            android:layout_width="300dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/numberRequest"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:hint="Номер заявки"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
-            app:layout_constraintEnd_toStartOf="@+id/savebtn"
+            android:layout_marginHorizontal="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/savebtn">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/numberRequestET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/nameRequestET"
-            android:layout_width="300dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameRequest"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:hint="Наименование"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
+            android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.135"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numberRequestET" />
+            app:layout_constraintTop_toBottomOf="@+id/numberRequest">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameRequestET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/customerET"
-            android:layout_width="300dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/creationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:hint="Дата создания"
+            android:layout_marginHorizontal="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameRequest">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/creationDateET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/customer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:hint="Заказчик"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
+            android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/creationDateET" />
+            app:layout_constraintTop_toBottomOf="@+id/creationDate">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/customerET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/creationDateET"
-            android:layout_width="300dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/planDate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:ems="10"
-            android:hint="Дата создания"
-            android:inputType="date"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.135"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameRequestET" />
-
-        <EditText
-            android:id="@+id/planDateET"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:hint="Плановая дата закрытия заявки"
-            android:inputType="date"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
+            android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customerET" />
+            app:layout_constraintTop_toBottomOf="@+id/customer">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/planDateET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/factDateET"
-            android:layout_width="300dp"
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:minHeight="56dp"
+            android:spinnerMode="dropdown"
+            android:paddingLeft="8dp"
+            android:layout_marginHorizontal="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/planDate"
+            android:background="@drawable/spinner_back"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/factDate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:hint="Фактическая дата закрытия заявки"
-            android:inputType="date"
-            android:minHeight="48dp"
-            android:paddingLeft="3dp"
+            android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/factDateET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textView9"
@@ -121,7 +170,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.063"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/factDateET" />
+            app:layout_constraintTop_toBottomOf="@+id/factDate" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
@@ -143,17 +192,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_save" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:minHeight="48dp"
-            android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/planDateET" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

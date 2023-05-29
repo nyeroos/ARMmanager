@@ -1,5 +1,6 @@
 package com.example.armmanager.ui.edit
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
+import java.util.*
 import javax.inject.Inject
 
 class EditRequestFragment : Fragment(), Injectable {
@@ -39,6 +41,38 @@ class EditRequestFragment : Fragment(), Injectable {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = AddRequestBinding.inflate(inflater)
+
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        binding.creationDateET.setOnClickListener {
+            val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                binding.creationDateET.setText(date)
+            }, year, month, day)
+
+            dpd.show()
+        }
+
+        binding.planDateET.setOnClickListener {
+            val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                binding.planDateET.setText(date)
+            }, year, month, day)
+
+            dpd.show()
+        }
+
+        binding.factDateET.setOnClickListener {
+            val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                binding.factDateET.setText(date)
+            }, year, month, day)
+
+            dpd.show()
+        }
 
         val statuses = resources.getStringArray(R.array.statuses_array)
 

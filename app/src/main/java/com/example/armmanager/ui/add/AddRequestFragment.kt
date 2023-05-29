@@ -1,6 +1,8 @@
 package com.example.armmanager.ui.add
 
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,9 @@ import com.example.armmanager.vo.Request
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class AddRequestFragment : Fragment(), Injectable {
 
@@ -36,6 +40,38 @@ class AddRequestFragment : Fragment(), Injectable {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = AddRequestBinding.inflate(layoutInflater)
+
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        binding.creationDateET.setOnClickListener {
+            val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                binding.creationDateET.setText(date)
+            }, year, month, day)
+
+            dpd.show()
+        }
+
+        binding.planDateET.setOnClickListener {
+            val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                binding.planDateET.setText(date)
+            }, year, month, day)
+
+            dpd.show()
+        }
+
+        binding.factDateET.setOnClickListener {
+            val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                binding.factDateET.setText(date)
+            }, year, month, day)
+
+            dpd.show()
+        }
 
         // access the items of the list
         val statuses = resources.getStringArray(R.array.statuses_array)
@@ -72,6 +108,7 @@ class AddRequestFragment : Fragment(), Injectable {
             val status = statuses[spinner.selectedItemPosition]
             val factDate = binding.factDateET.text.toString()
             val user = 1
+            Log.d("QQQ", "requestName: $requestName, requestDate: $requestDate")
             if (requestName.isNotEmpty()) {
                 var request = Request(
                     requestId,
@@ -94,6 +131,9 @@ class AddRequestFragment : Fragment(), Injectable {
 
         return binding.root
     }
+
+    //val creationDate = binding.creationDateET
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)
