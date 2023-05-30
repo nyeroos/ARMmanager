@@ -10,7 +10,7 @@ import com.example.armmanager.databinding.BottomSheetAddProductBinding
 
 import com.example.armmanager.vo.Product
 
-class AddProductDialogFragment: DialogFragment() {
+class AddProductDialogFragment : DialogFragment() {
     // Переменные для хранения ссылок на View-компоненты
     private var _binding: BottomSheetAddProductBinding? = null
     private val binding get() = _binding!!
@@ -30,9 +30,7 @@ class AddProductDialogFragment: DialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Создаем View-компоненты из макета диалогового окна
         _binding = BottomSheetAddProductBinding.inflate(inflater, container, false)

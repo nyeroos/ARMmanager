@@ -4,7 +4,6 @@ import com.example.armmanager.ui.account.AccountFragment
 import com.example.armmanager.ui.add.AddProductDialogFragment
 import com.example.armmanager.ui.add.AddRequestFragment
 import com.example.armmanager.ui.edit.EditRequestFragment
-import com.example.armmanager.ui.request.RequestFragment
 import com.example.armmanager.ui.request.complete.CompleteRequestFragment
 import com.example.armmanager.ui.request.work.WorkRequestFragment
 import com.example.armmanager.ui.product.ProductFragment
@@ -14,9 +13,6 @@ import dagger.android.ContributesAndroidInjector
 @Suppress("unused")
 @Module
 abstract class FragmentBuildersModule {
-    @ContributesAndroidInjector
-    abstract fun contributeRequestFragment(): RequestFragment
-
     @ContributesAndroidInjector
     abstract fun contributeCompleteRequestFragment(): CompleteRequestFragment
 

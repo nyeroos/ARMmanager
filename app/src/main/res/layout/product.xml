@@ -28,11 +28,12 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
-
-    <FrameLayout  android:id="@+id/standard_bottom_sheet"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    <FrameLayout
+        android:id="@+id/standard_bottom_sheet"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        tools:ignore="MissingConstraints">
 
     </FrameLayout>
 
