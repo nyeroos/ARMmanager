@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.armmanager.databinding.AccountBinding
@@ -28,10 +29,26 @@ class AccountFragment : Fragment() {
         _binding = AccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textView7 //????
-//        accountViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
+        binding.changePass.setOnClickListener {
+            // Показать поля password, newPassword и confirmPassword
+            binding.password.visibility = View.VISIBLE
+            binding.newPassword.visibility = View.VISIBLE
+            binding.confirmPassword.visibility = View.VISIBLE
+            binding.savebtn.visibility = View.VISIBLE
+        }
+
+        binding.savebtn.setOnClickListener {
+            // скрыть поля password, newPassword и confirmPassword
+            if (binding.newPasswordET.text.toString().equals(binding.confirmPasswordET.text.toString())){
+                Toast.makeText(context, "Успех", Toast.LENGTH_LONG).show()
+                binding.password.visibility = View.GONE
+                binding.newPassword.visibility = View.GONE
+                binding.confirmPassword.visibility = View.GONE
+                binding.savebtn.visibility = View.GONE
+            } else {
+                Toast.makeText(context, "Пароли не совадают", Toast.LENGTH_LONG).show()
+            }
+        }
         return root
     }
 
