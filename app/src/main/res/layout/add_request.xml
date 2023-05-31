@@ -9,12 +9,12 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/addProductbtn"
+            android:id="@+id/addProductBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="#A0B1B0"
-            android:text="Добавить позицию"
+            android:text="@string/add_position"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -28,11 +28,11 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="Номер заявки"
+            android:hint="@string/number_request"
             android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/savebtn">
+            app:layout_constraintTop_toTopOf="parent">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/numberRequestET"
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="Наименование"
+            android:hint="@string/name_request"
             android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="Дата создания"
+            android:hint="@string/creation_date"
             android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +91,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="Заказчик"
+            android:hint="@string/customer"
             android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="Плановая дата закрытия заявки"
+            android:hint="@string/plan_date"
             android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +146,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:hint="Фактическая дата закрытия заявки"
+            android:hint="@string/fact_date"
             android:layout_marginHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -161,11 +161,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/list_positions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Перечень позиций:"
+            android:text="@string/list_positions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.063"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,18 +178,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/list_positions" />
 
-        <ImageButton
-            android:id="@+id/savebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="28dp"
-            android:backgroundTint="@android:color/white"
-            android:contentDescription="Сохранить"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_save" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

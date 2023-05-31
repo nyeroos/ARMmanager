@@ -7,22 +7,22 @@
         <item
             android:id="@+id/item_1"
             android:icon="@drawable/ic_menu_request"
-            android:title="Заявки" />
+            android:title="@string/requests" />
         <item
             android:id="@+id/nav_anal"
             android:icon="@drawable/ic_menu_anal"
-            android:title="Аналитика" />
+            android:title="@string/anal" />
         <item
             android:id="@+id/nav_products"
             android:icon="@drawable/ic_menu_status"
-            android:title="Продукция" />
+            android:title="@string/products" />
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_menu_account"
-            android:title="Аккаунт" />
+            android:title="@string/account" />
         <item
             android:id="@+id/nav_exit"
             android:icon="@drawable/ic_menu_exit"
-            android:title="Выйти" />
+            android:title="@string/log_out" />
     </group>
 </menu>

@@ -19,7 +19,7 @@
         android:id="@+id/loading_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Запрос выполняется.\nПожалуйста подождите..."
+        android:text="@string/please_wait"
         android:textAlignment="center"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"

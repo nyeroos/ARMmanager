@@ -4,12 +4,18 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.armmanager.AppExecutors
@@ -22,7 +28,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class AddRequestFragment : Fragment(), Injectable {
 
@@ -32,13 +37,14 @@ class AddRequestFragment : Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    private val viewModel: AddRequestViewModel by viewModels() { viewModelFactory }
+    private val viewModel: AddRequestViewModel by viewModels { viewModelFactory }
 
     private lateinit var binding: AddRequestBinding
 
+    private lateinit var statuses:Array<String>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = AddRequestBinding.inflate(layoutInflater)
 
         val c = Calendar.getInstance()
@@ -48,7 +54,7 @@ class AddRequestFragment : Fragment(), Injectable {
 
         binding.creationDateET.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                val date = "${dayOfMonth}.${monthOfYear + 1}.${year}"
                 binding.creationDateET.setText(date)
             }, year, month, day)
 
@@ -57,7 +63,7 @@ class AddRequestFragment : Fragment(), Injectable {
 
         binding.planDateET.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                val date = "${dayOfMonth}.${monthOfYear + 1}.${year}"
                 binding.planDateET.setText(date)
             }, year, month, day)
 
@@ -66,7 +72,7 @@ class AddRequestFragment : Fragment(), Injectable {
 
         binding.factDateET.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                val date = "${dayOfMonth}.${monthOfYear + 1}.${year}"
                 binding.factDateET.setText(date)
             }, year, month, day)
 
@@ -74,7 +80,7 @@ class AddRequestFragment : Fragment(), Injectable {
         }
 
         // access the items of the list
-        val statuses = resources.getStringArray(R.array.statuses_array)
+         statuses = resources.getStringArray(R.array.statuses_array)
 
         // access the spinner
         val spinner = binding.spinner
@@ -96,61 +102,59 @@ class AddRequestFragment : Fragment(), Injectable {
                 }
             }
         }
-
-
-        binding.savebtn.setOnClickListener {
-            val requestId = 0
-            val requestNumber = binding.numberRequestET.text.toString().toIntOrNull() ?: 0
-            val requestName = binding.nameRequestET.text.toString()
-            val requestDate = binding.creationDateET.text.toString()
-            val customer = binding.customerET.text.toString()
-            val planDate = binding.planDateET.text.toString()
-            val status = statuses[spinner.selectedItemPosition]
-            val factDate = binding.factDateET.text.toString()
-            val user = 1
-            Log.d("QQQ", "requestName: $requestName, requestDate: $requestDate")
-            if (requestName.isNotEmpty()) {
-                var request = Request(
-                    requestId,
-                    requestNumber,
-                    requestName,
-                    customer,
-                    planDate,
-                    requestDate,
-                    factDate,
-                    user,
-                    status
-                )
-                val coroutineScope = CoroutineScope(Dispatchers.Main)
-                coroutineScope.launch {
-                    viewModel.insertRequest(request)
-                }
-            }
-            findNavController().navigateUp()
-        }
-
         return binding.root
     }
 
     //val creationDate = binding.creationDateET
 
+    private fun onSave(){
+        val requestId = 0
+        val requestNumber = binding.numberRequestET.text.toString().toIntOrNull() ?: 0
+        val requestName = binding.nameRequestET.text.toString()
+        val requestDate = binding.creationDateET.text.toString()
+        val customer = binding.customerET.text.toString()
+        val planDate = binding.planDateET.text.toString()
+        val status = statuses[binding.spinner.selectedItemPosition]
+        val factDate = binding.factDateET.text.toString()
+        val user = 1
+        Log.d("QQQ", "requestName: $requestName, requestDate: $requestDate")
+        if (requestName.isNotEmpty()) {
+            var request = Request(
+                requestId,
+                requestNumber,
+                requestName,
+                customer,
+                planDate,
+                requestDate,
+                factDate,
+                user,
+                status
+            )
+            val coroutineScope = CoroutineScope(Dispatchers.Main)
+            coroutineScope.launch {
+                viewModel.insertRequest(request)
+            }
+        }
+        findNavController().navigateUp()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        val manager = LinearLayoutManager(context) // LayoutManager
-//        adapter = RequestAdapter() // Создание объекта
-//        binding.currentRequestRV.layoutManager = manager // Назначение LayoutManager для RecyclerView
-//        binding.currentRequestRV.adapter = adapter // Назначение адаптера для RecyclerView
-//        //addRequestViewModel.log()
-//        requestViewModel.log1()
-//        //requestViewModel.log2()
-//        requestViewModel.requests.observe(viewLifecycleOwner, Observer { requestsResponse ->
-//            if (requestsResponse.status == Status.SUCCESS && requestsResponse.data != null)
-//                adapter.setData(requestsResponse.data)
-//        })
-//        /* viewModel.allRequests.observe(viewLifecycleOwner) { requests ->
-//             adapter.setData(requests.toMutableList())
-//         }*/
+        super.onViewCreated(view, savedInstanceState)
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.add_request_menu,menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.savebtn ->{
+                        onSave()
+                        true}
+                    else ->false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
 //    override fun onDestroyView() {
