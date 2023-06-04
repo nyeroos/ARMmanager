@@ -20,11 +20,11 @@ class MainActivity : DaggerAppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    private val showBottomMenuFragments = setOf(R.id.item_1, R.id.item_2)
+    private val showBottomMenuFragments = setOf(R.id.nav_requests, R.id.item_2)
     private val listener =
         NavController.OnDestinationChangedListener { _, destination, _ ->
             run {
-                if (destination.id == R.id.item_1 || destination.id == R.id.item_2)
+                if (destination.id == R.id.nav_requests || destination.id == R.id.item_2)
                     binding.bottomNavigation.visibility = View.VISIBLE
                 else
                     binding.bottomNavigation.visibility = View.GONE
@@ -49,7 +49,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.item_1,
+                R.id.nav_requests,
                 R.id.item_2,
                 R.id.nav_anal,
                 R.id.nav_products,

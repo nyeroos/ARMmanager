@@ -22,7 +22,6 @@ import com.example.armmanager.R
 import com.example.armmanager.databinding.AddRequestBinding
 import com.example.armmanager.di.Injectable
 import com.example.armmanager.ui.add.AddRequestViewModel
-import com.example.armmanager.ui.request.RequestViewModel
 import com.example.armmanager.vo.Request
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -163,7 +162,7 @@ class EditRequestFragment : Fragment(), Injectable {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.savebtn ->{
+                    R.id.saveBtn ->{
                         onSave()
                         true}
                     else ->false

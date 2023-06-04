@@ -17,17 +17,18 @@ class ProductRepository @Inject constructor(
     private val armService: ArmService
 ) {
 
-    fun getProducts(login: String): LiveData<Resource<List<Product>>> {
+    fun getProducts(): LiveData<Resource<List<Product>>> {
         return object : NetworkBoundResource<List<Product>, List<Product>>(appExecutors) {
             override fun saveCallResult(items: List<Product>) {
-                //requestDAO.insert(item)
+                productDAO.deleteAll()
+                items.forEach { el -> run { productDAO.insert(el) } }
             }
 
             override fun shouldFetch(data: List<Product>?) = data == null
 
             override fun loadFromDb() = productDAO.getProducts()
 
-            override fun createCall() = armService.getProduct("")
+            override fun createCall() = armService.getAllProducts()
         }.asLiveData()
     }
 

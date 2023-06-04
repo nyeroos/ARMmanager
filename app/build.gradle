@@ -1,9 +1,20 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+    }
+}
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
   //  id 'kotlin-parcelize'
 }
+
 
 android {
     namespace 'com.example.armmanager'
@@ -34,7 +45,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
-        exclude 'META-INF/atomicfu.kotlin_module'
+        resources {
+            excludes += ['META-INF/atomicfu.kotlin_module']
+        }
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -89,17 +102,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-
-    //implementation 'androidx.databinding:databinding-runtime:8.0.1'
-   // implementation "com.android.tools.build:gradle:7.4.0-rc03"
-
     //RequestListener
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
-
-//
-//    // optional - Test helpers
-//    testImplementation "androidx.room:room-testing:2.5.1"
-//}

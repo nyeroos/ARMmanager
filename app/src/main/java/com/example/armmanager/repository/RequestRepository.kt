@@ -62,27 +62,6 @@ class RequestRepository @Inject constructor(
 
         requestDAO.update(request)
 
-//        // Отправляем запрос на сервер для обновления записи
-//        val response = armService.updateRequest(request.id, request)
-//
-//
-//        // Обрабатываем ответ сервера
-//        when (val apiResponse = ApiResponse.create(response)) {
-//            is ApiSuccessResponse -> {
-//                // Если запрос успешен, обновляем запись в БД
-//                withContext(Dispatchers.IO) {
-//                    requestDAO.update(request)
-//                }
-//            }
-//            is ApiEmptyResponse -> {
-//                // Если сервер вернул пустой ответ, мы можем обработать это соответствующим образом
-//                // ...
-//            }
-//            is ApiErrorResponse -> {
-//                // Если запрос неуспешен, мы можем обработать ошибку соответствующим образом
-//                // ...
-//            }
-//        }
     }
 
     suspend fun getRequestCount(): Int {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/item_1">
+    app:startDestination="@id/nav_requests">
 
     <fragment
         android:id="@+id/addRequestFragment"
@@ -41,7 +41,7 @@
         android:label="Выполненные заявки"
         tools:layout="@layout/fragment_complete_request"/>
     <fragment
-        android:id="@+id/item_1"
+        android:id="@+id/nav_requests"
         android:name="com.example.armmanager.ui.request.work.WorkRequestFragment"
         android:label="В работе"
         tools:layout="@layout/fragment_work_request">
@@ -52,6 +52,11 @@
             android:id="@+id/action_workRequestFragment_to_editRequestFragment"
             app:destination="@id/editRequestFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_anal"
+        android:name="com.example.armmanager.ui.AnalyticsFragment"
+        android:label="Аналитика"
+        tools:layout="@layout/analytics"/>
 
 
 </navigation>

@@ -34,17 +34,17 @@ class AccountFragment : Fragment() {
             binding.password.visibility = View.VISIBLE
             binding.newPassword.visibility = View.VISIBLE
             binding.confirmPassword.visibility = View.VISIBLE
-            binding.savebtn.visibility = View.VISIBLE
+            binding.saveBtn.visibility = View.VISIBLE
         }
 
-        binding.savebtn.setOnClickListener {
+        binding.saveBtn.setOnClickListener {
             // скрыть поля password, newPassword и confirmPassword
             if (binding.newPasswordET.text.toString().equals(binding.confirmPasswordET.text.toString())){
                 Toast.makeText(context, "Успех", Toast.LENGTH_LONG).show()
                 binding.password.visibility = View.GONE
                 binding.newPassword.visibility = View.GONE
                 binding.confirmPassword.visibility = View.GONE
-                binding.savebtn.visibility = View.GONE
+                binding.saveBtn.visibility = View.GONE
             } else {
                 Toast.makeText(context, "Пароли не совадают", Toast.LENGTH_LONG).show()
             }

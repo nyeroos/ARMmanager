@@ -76,9 +76,8 @@ class ProductFragment : Fragment(), Injectable {
         }
 
         productViewModel.product.observe(viewLifecycleOwner, Observer { productsResponse ->
-            if (productsResponse.status == Status.SUCCESS && productsResponse.data != null) adapter.setData(
-                productsResponse.data
-            )
+            if (productsResponse.status == Status.SUCCESS && productsResponse.data != null)
+                adapter.setData(productsResponse.data)
         })
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
@@ -146,8 +145,7 @@ class ProductFragment : Fragment(), Injectable {
 
     private fun showAddBottomSheet() {
         // bottomSheetDialog?.setContentView(R.layout.bottom_sheet_add_product)
-        if (addBinding == null)
-            createAddView()
+        if (addBinding == null) createAddView()
         addBinding?.let { bottomSheetDialog?.setContentView(it.root) }
 
         bottomSheetDialog?.show()

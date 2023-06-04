@@ -19,7 +19,7 @@ class AppModule {
     @Provides
     fun provideArmService(): ArmService {
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
+            .baseUrl("http://10.0.2.2:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()

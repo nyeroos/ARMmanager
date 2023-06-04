@@ -40,4 +40,8 @@ interface ArmService {
 
     @GET("search/repositories")
     fun searchRepos(@Query("q") query: String, @Query("page") page: Int): Call<RequestProductResponse>
+
+
+    @GET("products/all")
+    fun getAllProducts():LiveData<ApiResponse<List<Product>>>
 }

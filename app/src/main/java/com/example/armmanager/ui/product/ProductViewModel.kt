@@ -13,15 +13,12 @@ import javax.inject.Inject
 class ProductViewModel @Inject constructor(private val productsRepository: ProductRepository) :
     ViewModel() {
 
-    val product: LiveData<Resource<List<Product>>> = productsRepository.getProducts("")
+    val product: LiveData<Resource<List<Product>>> = productsRepository.getProducts()
 
     suspend fun deleteProduct(product: Product) {
         productsRepository.deleteProduct(product)
     }
 
-//    suspend fun insertProduct(product: Product) {
-//        productsRepository.insertProduct(product)
-//    }
 
     fun createProduct(productName: String): LiveData<Resource<Product>> {
         return productsRepository.createProduct(productName)

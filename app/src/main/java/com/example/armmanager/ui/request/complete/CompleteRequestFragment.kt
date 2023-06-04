@@ -49,12 +49,8 @@ class CompleteRequestFragment : Fragment(), Injectable {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentCompleteRequestBinding.inflate(layoutInflater)
-
-
         val root: View = binding.root
-
         return root
     }
 
