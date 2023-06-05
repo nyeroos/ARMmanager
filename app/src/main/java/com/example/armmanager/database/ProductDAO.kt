@@ -12,11 +12,14 @@ interface ProductDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(product: Product)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(list: List<Product>)
+
     @Update
     fun update(product: Product)
 
     @Query("DELETE FROM product_table")
-     fun deleteAll()
+    fun deleteAll()
 
     @Delete
      fun deleteProduct(product: Product)

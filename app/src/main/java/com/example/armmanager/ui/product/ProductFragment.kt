@@ -74,10 +74,24 @@ class ProductFragment : Fragment(), Injectable {
 //            dialog.show(parentFragmentManager, "add_product_dialog")
             showAddBottomSheet()
         }
+        binding.productRV.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0){
+                    if (binding.fabAdd.isExtended)
+                        binding.fabAdd.shrink()
+                }
+                else if (dy < 0) {
+                    if (!binding.fabAdd.isExtended)
+                        binding.fabAdd.extend()
+                }
+            }
+        })
 
         productViewModel.product.observe(viewLifecycleOwner, Observer { productsResponse ->
             if (productsResponse.status == Status.SUCCESS && productsResponse.data != null)
-                adapter.setData(productsResponse.data)
+                adapter.submitList(null)
+                adapter.submitList(productsResponse.data)
         })
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
@@ -116,31 +130,30 @@ class ProductFragment : Fragment(), Injectable {
     private fun createAddView() {
         addBinding = BottomSheetAddProductBinding.inflate(layoutInflater)
         addBinding!!.saveProductBtn.setOnClickListener {
-//            var productText = addBinding!!.productNameET.text.toString()
-//            if (productText.isNotEmpty()) {
-//                productViewModel.createProduct(productText).observe(
-//                    viewLifecycleOwner
-//                ) { productsResponse ->
-//                    when (productsResponse.status) {
-//                        Status.SUCCESS -> {
-//
-//                            bottomSheetDialog?.dismiss()
-//                        }
-//                        Status.LOADING -> {
-//                            //bottomSheet.setContentView(loadBinding.root)
-//                            //Показать лоадер вместо кнопки сохранить
-//                        }
-//                        Status.ERROR -> {
-//                            //Показать текст ошибки под текстовым полем
-//                            //Активировать кнопку вместо лоадера
-//                        }
-//
-//                    }
+            var productText = addBinding!!.productNameET.text.toString()
+            if (productText.isNotEmpty()) {
+                productViewModel.createProduct(productText).observe(
+                    viewLifecycleOwner
+                ) { productsResponse ->
+                    when (productsResponse.status) {
+                        Status.SUCCESS -> {
+                            bottomSheetDialog?.dismiss()
+                            productViewModel.refresh()
 
-//                }
-//            }
-            bottomSheetDialog?.setContentView(BottomSheetLoadingBinding.inflate(layoutInflater).root)
-        }
+                        }
+                        Status.LOADING -> {
+                            bottomSheetDialog?.setContentView(BottomSheetLoadingBinding.inflate(layoutInflater).root)
+
+                        }
+                        Status.ERROR -> {
+                            bottomSheetDialog?.setContentView(addBinding!!.root)
+                        }
+
+                    }
+
+                }
+            }
+                  }
     }
 
     private fun showAddBottomSheet() {

@@ -70,10 +70,11 @@ class WorkRequestFragment : Fragment(), Injectable {
         binding.currentRequestRV.layoutManager =
             manager // Назначение LayoutManager для RecyclerView
         binding.currentRequestRV.adapter = adapter // Назначение адаптера для RecyclerView
-        requestViewModel.log1()
+        //requestViewModel.log1()
         requestViewModel.requests.observe(viewLifecycleOwner, Observer { requestsResponse ->
             if (requestsResponse.status == Status.SUCCESS && requestsResponse.data != null)
-                adapter.setData(requestsResponse.data)
+                adapter.submitList(null)
+                adapter.submitList(requestsResponse.data)
         })
 
         binding.currentRequestRV.addOnScrollListener(object : RecyclerView.OnScrollListener(){

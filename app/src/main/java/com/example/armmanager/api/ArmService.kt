@@ -3,6 +3,7 @@ package com.example.armmanager.api
 import androidx.lifecycle.LiveData
 import com.example.armmanager.vo.Product
 import com.example.armmanager.vo.Request
+import com.example.armmanager.vo.dto.AddProductDto
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -11,8 +12,8 @@ interface ArmService {
 //    @GET("users/{login}")
 //    fun getUser(@Path("login") login: String): LiveData<ApiResponse<User>>
 
-    @GET("users/{login}/repos")
-    fun getRequest(@Path("login") login: String): LiveData<ApiResponse<List<Request>>>
+//    @GET("users/{login}/repos")
+//    fun getRequest(@Path("login") login: String): LiveData<ApiResponse<List<Request>>>
 
     @POST("")
     fun createProduct(name: String): LiveData<ApiResponse<Product>>
@@ -40,6 +41,12 @@ interface ArmService {
 
     @GET("search/repositories")
     fun searchRepos(@Query("q") query: String, @Query("page") page: Int): Call<RequestProductResponse>
+
+    @GET("request/all")
+    fun getAllRequest():LiveData<ApiResponse<List<Request>>>
+
+    @POST("products/add")
+    fun addProduct(@Body productName: AddProductDto): LiveData<ApiResponse<Product>>
 
 
     @GET("products/all")

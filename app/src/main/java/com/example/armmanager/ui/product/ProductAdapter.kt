@@ -25,11 +25,6 @@ class ProductAdapter: ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pro
 
     }
 
-    fun setData(newProduct: List<Product>) {
-        submitList(newProduct)
-        //notifyDataSetChanged()
-    }
-
     interface OnItemClickListener {
         fun onItemClick(product: Product)
     }
@@ -49,7 +44,7 @@ class ProductAdapter: ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pro
         private val productItemView: TextView = itemView.findViewById(R.id.nameProductRV) //?
 
         fun bind(product: Product) {
-            productItemView.text = product.name
+            productItemView.text = product.productName
 
             itemView.setOnClickListener {
                 listener?.onItemClick(product)

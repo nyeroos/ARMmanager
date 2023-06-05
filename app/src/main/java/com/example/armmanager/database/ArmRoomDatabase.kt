@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
     entities = [Request::class,
                 User::class,
                 Product::class],
-    version = 1,
+    version = 2,
     exportSchema = false)
 public abstract class ArmRoomDatabase : RoomDatabase() {
 

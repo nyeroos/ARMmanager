@@ -7,6 +7,7 @@ import com.example.armmanager.database.ProductDAO
 import com.example.armmanager.util.AbsentLiveData
 import com.example.armmanager.vo.Product
 import com.example.armmanager.vo.Resource
+import com.example.armmanager.vo.dto.AddProductDto
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,10 +22,10 @@ class ProductRepository @Inject constructor(
         return object : NetworkBoundResource<List<Product>, List<Product>>(appExecutors) {
             override fun saveCallResult(items: List<Product>) {
                 productDAO.deleteAll()
-                items.forEach { el -> run { productDAO.insert(el) } }
+                productDAO.insertAll(items)
             }
 
-            override fun shouldFetch(data: List<Product>?) = data == null
+            override fun shouldFetch(data: List<Product>?) = true
 
             override fun loadFromDb() = productDAO.getProducts()
 
@@ -42,14 +43,14 @@ class ProductRepository @Inject constructor(
     fun createProduct(name: String): LiveData<Resource<Product>> {
         return object : NetworkBoundResource<Product, Product>(appExecutors) {
             override fun saveCallResult(item: Product) {
-                //requestDAO.insert(item)
+                productDAO.insert(item)
             }
 
             override fun shouldFetch(data: Product?) = true
 
             override fun loadFromDb() = AbsentLiveData.create<Product>()
 
-            override fun createCall() = armService.createProduct(name)
+            override fun createCall() = armService.addProduct(AddProductDto(name))
         }.asLiveData()
     }
 

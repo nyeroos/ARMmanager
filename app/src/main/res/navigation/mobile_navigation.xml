@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_anal"
-        android:name="com.example.armmanager.ui.AnalyticsFragment"
+        android:name="com.example.armmanager.ui.analytics.AnalyticsFragment"
         android:label="Аналитика"
         tools:layout="@layout/analytics"/>
 

@@ -10,9 +10,9 @@ import javax.inject.Inject
 
 class RequestViewModel @Inject constructor(private val requestRepository: RequestRepository): ViewModel() {
 
-    val requests: LiveData<Resource<List<Request>>> = requestRepository.getRequests("")
+    val requests: LiveData<Resource<List<Request>>> = requestRepository.getRequests()
 
-    val completerequests: LiveData<Resource<List<Request>>> = requestRepository.getCompleteRequest("")
+    val completerequests: LiveData<Resource<List<Request>>> = requestRepository.getCompleteRequest()
 
     suspend fun deleteRequest(request: Request) {
         requestRepository.deleteRequest(request)
@@ -26,9 +26,9 @@ class RequestViewModel @Inject constructor(private val requestRepository: Reques
     }*/
 
   //  fun log() = viewModelScope.launch { requestRepository.insertRequest() }
-    fun log2() = viewModelScope.launch { requestRepository.deleteAll() }
-    fun log1() = viewModelScope.launch {
-        var a = requestRepository.getRequestCount()
-        Log.d("gg","$a")
-    }
+    //fun log2() = viewModelScope.launch { requestRepository.deleteAll() }
+    //fun log1() = viewModelScope.launch {
+//        var a = requestRepository.getRequestCount()
+//        Log.d("gg","$a")
+//    }
 }

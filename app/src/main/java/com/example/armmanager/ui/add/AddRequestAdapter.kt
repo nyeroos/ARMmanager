@@ -26,7 +26,7 @@ class AddRequestAdapter: RecyclerView.Adapter<AddRequestAdapter.AddRequestViewHo
         val context = holder.itemView.context
 
         with(holder.binding) {
-            nameProductRequestRV.text = product.name.toString()
+            nameProductRequestRV.text = product.productName
            // amountProductRV.text = product.amount.toString()
         }
     }

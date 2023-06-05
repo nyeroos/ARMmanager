@@ -9,19 +9,31 @@ import com.example.armmanager.database.RequestDAO
 import com.example.armmanager.util.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
+
     @Singleton
     @Provides
-    fun provideArmService(): ArmService {
+    fun provideOkHttpClient(): OkHttpClient {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder().addInterceptor(logging).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideArmService(client: OkHttpClient): ArmService {
         return Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
+            .client(client)
             .build()
             .create(ArmService::class.java)
     }

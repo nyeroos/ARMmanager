@@ -23,31 +23,33 @@ class RequestRepository @Inject constructor(
     private val armService: ArmService
 ) {
 
-    fun getRequests(login: String): LiveData<Resource<List<Request>>> {
+    fun getRequests(): LiveData<Resource<List<Request>>> {
         return object : NetworkBoundResource<List<Request>, List<Request>>(appExecutors) {
             override fun saveCallResult(items: List<Request>) {
-                //requestDAO.insert(item)
+                requestDAO.deleteAll()
+                requestDAO.insertAll(items)
             }
 
-            override fun shouldFetch(data: List<Request>?) = data == null
+            override fun shouldFetch(data: List<Request>?) = true
 
             override fun loadFromDb() = requestDAO.getRequests()
 
-            override fun createCall() = armService.getRequest("")
+            override fun createCall() = armService.getAllRequest()
         }.asLiveData()
     }
 
-    fun getCompleteRequest(login: String): LiveData<Resource<List<Request>>> {
+    fun getCompleteRequest(): LiveData<Resource<List<Request>>> {
         return object : NetworkBoundResource<List<Request>, List<Request>>(appExecutors) {
             override fun saveCallResult(items: List<Request>) {
-                //requestDAO.insert(item)
+                requestDAO.deleteAll()
+                requestDAO.insertAll(items)
             }
 
-            override fun shouldFetch(data: List<Request>?) = data == null
+            override fun shouldFetch(data: List<Request>?) = true
 
             override fun loadFromDb() = requestDAO.getCompletedRequests()
 
-            override fun createCall() = armService.getRequest("")
+            override fun createCall() = armService.getAllRequest()
         }.asLiveData()
     }
 

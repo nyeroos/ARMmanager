@@ -13,10 +13,10 @@ class Request(
     val id: Int,
 
     @ColumnInfo(name = "request_number")
-    val number: Int,
+    val requestNumber: Int,
 
     @ColumnInfo(name = "request_name")
-    val name: String,
+    val requestName: String,
 
     @ColumnInfo(name = "customer")
     val customer: String,
@@ -55,8 +55,8 @@ class Request(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
-        parcel.writeInt(number)
-        parcel.writeString(name)
+        parcel.writeInt(requestNumber)
+        parcel.writeString(requestName)
         parcel.writeString(customer)
         parcel.writeString(expectedDate)
         parcel.writeString(creationDate)

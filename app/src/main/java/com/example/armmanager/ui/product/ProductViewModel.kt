@@ -28,4 +28,8 @@ class ProductViewModel @Inject constructor(private val productsRepository: Produ
         var a = productsRepository.getProductCount()
         Log.d("tt", "$a")
     }
+
+    fun refresh() {
+        productsRepository.getProducts()
+    }
 }

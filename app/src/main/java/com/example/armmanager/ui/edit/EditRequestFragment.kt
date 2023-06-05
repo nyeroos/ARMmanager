@@ -27,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
+import com.example.armmanager.ui.request.RequestAdapter
 import java.util.*
 import javax.inject.Inject
 
@@ -107,8 +108,8 @@ class EditRequestFragment : Fragment(), Injectable {
             currentRequest = it.getParcelable("value")
                 ?: throw IllegalArgumentException("Request object is null")
             currentRequest?.let {
-                binding.numberRequestET.setText(currentRequest.number.toString())
-                binding.nameRequestET.setText(currentRequest.name)
+                binding.numberRequestET.setText(currentRequest.requestNumber.toString())
+                binding.nameRequestET.setText(currentRequest.requestName)
                 binding.customerET.setText(currentRequest.customer)
                 binding.creationDateET.setText(currentRequest.creationDate)
                 binding.planDateET.setText(currentRequest.expectedDate)
@@ -122,7 +123,7 @@ class EditRequestFragment : Fragment(), Injectable {
     }
 
     private fun onSave(){
-        val requestId = 0
+        val requestId = currentRequest.id
         val requestNumber = binding.numberRequestET.text.toString().toIntOrNull() ?: 0
         val requestName = binding.nameRequestET.text.toString()
         val requestDate = binding.creationDateET.text.toString()
@@ -133,7 +134,7 @@ class EditRequestFragment : Fragment(), Injectable {
         val user = 1
         Log.d("QQQ", "requestName: $requestName, requestDate: $requestDate")
         if (requestName.isNotEmpty()) {
-            var request = Request(
+            var updatedRequest = Request(
                 requestId,
                 requestNumber,
                 requestName,
@@ -146,7 +147,7 @@ class EditRequestFragment : Fragment(), Injectable {
             )
             val coroutineScope = CoroutineScope(Dispatchers.Main)
             coroutineScope.launch {
-                viewModel.insertRequest(request)
+                viewModel.updateRequest(updatedRequest)
             }
         }
         findNavController().navigateUp()

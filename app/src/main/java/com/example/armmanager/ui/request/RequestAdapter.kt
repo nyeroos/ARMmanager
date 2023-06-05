@@ -26,7 +26,7 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
 
     fun setData(newRequests: List<Request>) {
         submitList(newRequests)
-        //notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     interface OnItemClickListener {
@@ -39,7 +39,7 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
 
     fun removeItem(position: Int) {
         val currentList = currentList.toMutableList()
-        currentList.removeAt(position)
+        //currentList.removeAt(position)
         submitList(currentList)
     }
 
@@ -49,8 +49,8 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
         private val requestItemView3: TextView = itemView.findViewById(R.id.statusRequestRV)
 
         fun bind(request: Request) {
-            requestItemView.text = request.number.toString()
-            requestItemView2.text = request.name
+            requestItemView.text = request.requestNumber.toString()
+            requestItemView2.text = request.requestName
             requestItemView3.text = request.status
 
             itemView.setOnClickListener {

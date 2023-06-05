@@ -1,4 +1,4 @@
-package com.example.armmanager.ui
+package com.example.armmanager.ui.analytics
 
 import android.graphics.Color
 import android.graphics.Paint

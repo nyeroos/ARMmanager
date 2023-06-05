@@ -68,7 +68,7 @@ class CompleteRequestFragment : Fragment(), Injectable {
         )
         binding.completeRequestRV.adapter = adapter // Назначение адаптера для RecyclerView
         //addRequestViewModel.log()
-        requestViewModel.log1()
+        //requestViewModel.log1()
         //requestViewModel.log2()
         requestViewModel.completerequests.observe(viewLifecycleOwner, Observer { requestsResponse ->
             if (requestsResponse.status == Status.SUCCESS && requestsResponse.data != null)
@@ -98,7 +98,7 @@ class CompleteRequestFragment : Fragment(), Injectable {
                     val position = viewHolder.adapterPosition
                     val request = adapter.currentList[position]
                     requestViewModel.deleteRequest(request)
-                    adapter.removeItem(position)
+                    //adapter.removeItem(position)
                 }
             }
         }
