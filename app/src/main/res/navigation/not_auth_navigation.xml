@@ -9,7 +9,19 @@
         android:id="@+id/authorizationFragment"
         android:name="com.example.armmanager.ui.auth.AuthorizationFragment"
         android:label="Авторизация"
-        tools:layout="@layout/authorization"
-        />
+        tools:layout="@layout/authorization">
+        <action
+            android:id="@+id/action_authorizationFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.armmanager.ui.register.RegisterFragment"
+        android:label="Регистрация"
+        tools:layout="@layout/registration">
+        <action
+            android:id="@+id/action_registerFragment_to_authorizationFragment"
+            app:destination="@id/authorizationFragment" />
+    </fragment>
 
 </navigation>

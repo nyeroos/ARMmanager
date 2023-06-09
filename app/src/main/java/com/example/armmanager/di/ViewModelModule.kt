@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.armmanager.ui.account.AccountViewModel
 import com.example.armmanager.ui.auth.AuthorizationViewModel
 import com.example.armmanager.ui.product.ProductViewModel
+import com.example.armmanager.ui.register.RegisterViewModel
 import com.example.armmanager.ui.request.RequestViewModel
 import com.example.armmanager.viewmodel.ArmViewModelFactory
 import dagger.Binds
@@ -33,6 +34,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AuthorizationViewModel::class)
     abstract fun bindAuthorizationViewModel(authorizationViewModel: AuthorizationViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RegisterViewModel::class)
+    abstract fun bindRegisterViewModel(registerViewModel: RegisterViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ArmViewModelFactory): ViewModelProvider.Factory

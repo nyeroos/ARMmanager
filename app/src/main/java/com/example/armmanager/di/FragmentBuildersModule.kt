@@ -8,6 +8,7 @@ import com.example.armmanager.ui.request.edit.EditRequestFragment
 import com.example.armmanager.ui.request.complete.CompleteRequestFragment
 import com.example.armmanager.ui.request.work.WorkRequestFragment
 import com.example.armmanager.ui.product.ProductFragment
+import com.example.armmanager.ui.register.RegisterFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -37,6 +38,9 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeAuthorizationFragment(): AuthorizationFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeRegisterFragment(): RegisterFragment
 
 //    @ContributesAndroidInjector
 //    abstract fun contributeSearchFragment(): SearchFragment

@@ -41,6 +41,10 @@ class AuthorizationFragment : Fragment(), Injectable {
         binding.enter.setOnClickListener { authorizationViewModel.
         login(binding.emailET.text.toString(), binding.passwordET.text.toString() ) }
 
+        binding.registration.setOnClickListener{
+            findNavController().navigate(R.id.action_authorizationFragment_to_registerFragment)
+        }
+
     }
 
 }
