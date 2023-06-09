@@ -30,9 +30,6 @@ class Request(
     @ColumnInfo(name = "actual_date")
     val actualDate: String,
 
-    @ColumnInfo(name = "user")
-    val user: Int,
-
     @ColumnInfo(name = "status")
     val status: String,
 ) : Parcelable {
@@ -45,7 +42,6 @@ class Request(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt(),
         parcel.readString()!!
     )
 
@@ -61,7 +57,6 @@ class Request(
         parcel.writeString(expectedDate)
         parcel.writeString(creationDate)
         parcel.writeString(actualDate)
-        parcel.writeInt(user)
         parcel.writeString(status)
     }
 
@@ -75,8 +70,7 @@ class Request(
                 parcel.readString()!!,
                 parcel.readString()!!,
                 parcel.readString()!!,
-                parcel.readInt(),
-                parcel.readString()!!
+                   parcel.readString()!!
             )
         }
 

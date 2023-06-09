@@ -1,8 +1,7 @@
-package com.example.armmanager.ui.add
+package com.example.armmanager.ui.request.add
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,10 +21,8 @@ import com.example.armmanager.AppExecutors
 import com.example.armmanager.R
 import com.example.armmanager.databinding.AddRequestBinding
 import com.example.armmanager.di.Injectable
-import com.example.armmanager.vo.Request
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.armmanager.ui.request.RequestViewModel
+import com.example.armmanager.vo.Status
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -37,11 +34,11 @@ class AddRequestFragment : Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    private val viewModel: AddRequestViewModel by viewModels { viewModelFactory }
+    private val requestViewModel: RequestViewModel by viewModels { viewModelFactory }
 
     private lateinit var binding: AddRequestBinding
 
-    private lateinit var statuses:Array<String>
+    private lateinit var statuses: Array<String>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -80,7 +77,7 @@ class AddRequestFragment : Fragment(), Injectable {
         }
 
         // access the items of the list
-         statuses = resources.getStringArray(R.array.statuses_array)
+        statuses = resources.getStringArray(R.array.statuses_array)
 
         // access the spinner
         val spinner = binding.spinner
@@ -107,35 +104,60 @@ class AddRequestFragment : Fragment(), Injectable {
 
     //val creationDate = binding.creationDateET
 
-    private fun onSave(){
-        val requestId = 0
+    private fun onSave() {
+        //val requestId = 0
         val requestNumber = binding.numberRequestET.text.toString().toIntOrNull() ?: 0
         val requestName = binding.nameRequestET.text.toString()
-        val requestDate = binding.creationDateET.text.toString()
+        val creationDate = binding.creationDateET.text.toString()
         val customer = binding.customerET.text.toString()
-        val planDate = binding.planDateET.text.toString()
+        val expectedDate = binding.planDateET.text.toString()
         val status = statuses[binding.spinner.selectedItemPosition]
-        val factDate = binding.factDateET.text.toString()
+        val actualDate = binding.factDateET.text.toString()
         val user = 1
-        Log.d("QQQ", "requestName: $requestName, requestDate: $requestDate")
+        //Log.d("QQQ", "requestName: $requestName, requestDate: $requestDate")
         if (requestName.isNotEmpty()) {
-            var request = Request(
-                requestId,
-                requestNumber,
-                requestName,
-                customer,
-                planDate,
-                requestDate,
-                factDate,
-                user,
-                status
-            )
-            val coroutineScope = CoroutineScope(Dispatchers.Main)
-            coroutineScope.launch {
-                viewModel.insertRequest(request)
+            requestViewModel.createRequest(
+                requestNumber, requestName, customer,
+                expectedDate, creationDate, actualDate, user, status
+            ).observe(
+                viewLifecycleOwner
+            ) { requestResponse ->
+                when (requestResponse.status) {
+                    Status.SUCCESS -> {
+                        findNavController().navigateUp()
+                        requestViewModel.refresh()
+                        //productViewModel.refresh()
+                    }
+
+                    Status.LOADING -> {
+
+                        //bottomSheetDialog?.setContentView(BottomSheetLoadingBinding.inflate(layoutInflater).root)
+                    }
+
+                    Status.ERROR -> {
+                        //bottomSheetDialog?.setContentView(addBinding!!.root)
+                    }
+
+                }
+
             }
+//            var request = Request(
+//                requestId,
+//                requestNumber,
+//                requestName,
+//                customer,
+//                planDate,
+//                requestDate,
+//                factDate,
+//                user,
+//                status
+//            )
+//            val coroutineScope = CoroutineScope(Dispatchers.Main)
+//            coroutineScope.launch {
+//                viewModel.insertRequest(request)
+//            }
         }
-        findNavController().navigateUp()
+        //findNavController().navigateUp()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -143,15 +165,17 @@ class AddRequestFragment : Fragment(), Injectable {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.add_request_menu,menu)
+                menuInflater.inflate(R.menu.add_request_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.saveBtn ->{
+                    R.id.saveBtn -> {
                         onSave()
-                        true}
-                    else ->false
+                        true
+                    }
+
+                    else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)

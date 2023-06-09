@@ -1,8 +1,7 @@
-package com.example.armmanager.ui.edit
+package com.example.armmanager.ui.request.edit
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,24 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.armmanager.AppExecutors
 import com.example.armmanager.R
 import com.example.armmanager.databinding.AddRequestBinding
 import com.example.armmanager.di.Injectable
-import com.example.armmanager.ui.add.AddRequestViewModel
+import com.example.armmanager.ui.request.RequestViewModel
 import com.example.armmanager.vo.Request
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import androidx.navigation.fragment.findNavController
-import com.example.armmanager.ui.request.RequestAdapter
-import java.util.*
+import com.example.armmanager.vo.Status
+import java.util.Calendar
 import javax.inject.Inject
 
 class EditRequestFragment : Fragment(), Injectable {
@@ -39,16 +36,16 @@ class EditRequestFragment : Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    private val viewModel: AddRequestViewModel by viewModels { viewModelFactory }
+    private val viewModel: RequestViewModel by viewModels { viewModelFactory }
 
     private lateinit var binding: AddRequestBinding
     private lateinit var currentRequest: Request
 
-    private lateinit var statuses:Array<String>
+    private lateinit var statuses: Array<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = AddRequestBinding.inflate(inflater)
 
         val c = Calendar.getInstance()
@@ -58,7 +55,7 @@ class EditRequestFragment : Fragment(), Injectable {
 
         binding.creationDateET.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                val date = "${dayOfMonth}.${monthOfYear + 1}.${year}"
                 binding.creationDateET.setText(date)
             }, year, month, day)
 
@@ -67,7 +64,7 @@ class EditRequestFragment : Fragment(), Injectable {
 
         binding.planDateET.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                val date = "${dayOfMonth}.${monthOfYear + 1}.${year}"
                 binding.planDateET.setText(date)
             }, year, month, day)
 
@@ -76,7 +73,7 @@ class EditRequestFragment : Fragment(), Injectable {
 
         binding.factDateET.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
-                val date = "${dayOfMonth}.${monthOfYear+1}.${year}"
+                val date = "${dayOfMonth}.${monthOfYear + 1}.${year}"
                 binding.factDateET.setText(date)
             }, year, month, day)
 
@@ -107,7 +104,7 @@ class EditRequestFragment : Fragment(), Injectable {
         arguments?.let {
             currentRequest = it.getParcelable("value")
                 ?: throw IllegalArgumentException("Request object is null")
-            currentRequest?.let {
+            currentRequest.let {
                 binding.numberRequestET.setText(currentRequest.requestNumber.toString())
                 binding.nameRequestET.setText(currentRequest.requestName)
                 binding.customerET.setText(currentRequest.customer)
@@ -122,7 +119,7 @@ class EditRequestFragment : Fragment(), Injectable {
         return binding.root
     }
 
-    private fun onSave(){
+    private fun onSave() {
         val requestId = currentRequest.id
         val requestNumber = binding.numberRequestET.text.toString().toIntOrNull() ?: 0
         val requestName = binding.nameRequestET.text.toString()
@@ -131,8 +128,6 @@ class EditRequestFragment : Fragment(), Injectable {
         val planDate = binding.planDateET.text.toString()
         val status = statuses[binding.spinner.selectedItemPosition]
         val factDate = binding.factDateET.text.toString()
-        val user = 1
-        Log.d("QQQ", "requestName: $requestName, requestDate: $requestDate")
         if (requestName.isNotEmpty()) {
             var updatedRequest = Request(
                 requestId,
@@ -142,15 +137,38 @@ class EditRequestFragment : Fragment(), Injectable {
                 planDate,
                 requestDate,
                 factDate,
-                user,
+
                 status
             )
-            val coroutineScope = CoroutineScope(Dispatchers.Main)
-            coroutineScope.launch {
-                viewModel.updateRequest(updatedRequest)
+
+            viewModel.updateRequest(updatedRequest).observe(
+                viewLifecycleOwner
+            ) { requestResponse ->
+                when (requestResponse.status) {
+                    Status.SUCCESS -> {
+                        findNavController().navigateUp()
+                        viewModel.refresh()
+
+                    }
+
+                    Status.LOADING -> {
+                        Toast.makeText(context, "Loading...", Toast.LENGTH_LONG).show()
+
+                        //bottomSheetDialog?.setContentView(BottomSheetLoadingBinding.inflate(layoutInflater).root)
+                    }
+
+                    Status.ERROR -> {
+                        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                        //bottomSheetDialog?.setContentView(addBinding!!.root)
+                    }
+
+                }
+
+
             }
+
+
         }
-        findNavController().navigateUp()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -158,15 +176,17 @@ class EditRequestFragment : Fragment(), Injectable {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.add_request_menu,menu)
+                menuInflater.inflate(R.menu.add_request_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.saveBtn ->{
+                    R.id.saveBtn -> {
                         onSave()
-                        true}
-                    else ->false
+                        true
+                    }
+
+                    else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)

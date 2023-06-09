@@ -1,10 +1,12 @@
 package com.example.armmanager.ui.product
 
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -115,7 +117,7 @@ class ProductFragment : Fragment(), Injectable {
                 }
             }
         }
-
+productViewModel.refresh()
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.productRV)
     }
@@ -127,9 +129,20 @@ class ProductFragment : Fragment(), Injectable {
     }
 
 
+    private fun closeBottomSheet(){
+        bottomSheetDialog?.dismiss()
+    }
+
+    private fun hideKeyboard(view: View){
+        val inputMethodManager = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+
+    }
+
     private fun createAddView() {
         addBinding = BottomSheetAddProductBinding.inflate(layoutInflater)
         addBinding!!.saveProductBtn.setOnClickListener {
+            hideKeyboard(it)
             var productText = addBinding!!.productNameET.text.toString()
             if (productText.isNotEmpty()) {
                 productViewModel.createProduct(productText).observe(
@@ -137,16 +150,16 @@ class ProductFragment : Fragment(), Injectable {
                 ) { productsResponse ->
                     when (productsResponse.status) {
                         Status.SUCCESS -> {
-                            bottomSheetDialog?.dismiss()
+                            closeBottomSheet()
                             productViewModel.refresh()
-
+                            //productViewModel.refresh()
                         }
                         Status.LOADING -> {
-                            bottomSheetDialog?.setContentView(BottomSheetLoadingBinding.inflate(layoutInflater).root)
 
+                            bottomSheetDialog?.setContentView(BottomSheetLoadingBinding.inflate(layoutInflater).root)
                         }
                         Status.ERROR -> {
-                            bottomSheetDialog?.setContentView(addBinding!!.root)
+                            //bottomSheetDialog?.setContentView(addBinding!!.root)
                         }
 
                     }

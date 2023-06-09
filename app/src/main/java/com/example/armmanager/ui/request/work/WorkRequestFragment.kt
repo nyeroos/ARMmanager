@@ -63,6 +63,12 @@ class WorkRequestFragment : Fragment(), Injectable {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+        requestViewModel.refresh()
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val manager = LinearLayoutManager(context) // LayoutManager

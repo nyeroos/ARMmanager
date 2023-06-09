@@ -1,8 +1,11 @@
 package com.example.armmanager.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.armmanager.api.ArmService
+import com.example.armmanager.api.HeaderInterceptor
 import com.example.armmanager.database.ArmRoomDatabase
 import com.example.armmanager.database.ProductDAO
 import com.example.armmanager.database.RequestDAO
@@ -15,17 +18,23 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
 @Module(includes = [ViewModelModule::class])
 class AppModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(sharedPreferences: SharedPreferences?): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder().addInterceptor(logging).build()
+
+        return OkHttpClient.Builder().addInterceptor(HeaderInterceptor(sharedPreferences)).addInterceptor(logging).build()
     }
 
+    @Provides
+    fun provideSharedPreferences(application: Application): SharedPreferences? {
+        return application.getSharedPreferences("login", Context.MODE_PRIVATE)
+    }
     @Singleton
     @Provides
     fun provideArmService(client: OkHttpClient): ArmService {
@@ -33,10 +42,13 @@ class AppModule {
             .baseUrl("http://10.0.2.2:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
+
             .client(client)
             .build()
             .create(ArmService::class.java)
     }
+
+
 
     @Singleton
     @Provides

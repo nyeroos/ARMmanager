@@ -41,9 +41,9 @@ class ProductRepository @Inject constructor(
     }
 
     fun createProduct(name: String): LiveData<Resource<Product>> {
-        return object : NetworkBoundResource<Product, Product>(appExecutors) {
-            override fun saveCallResult(item: Product) {
-                productDAO.insert(item)
+        return object : NetworkBoundResource<Product, Unit>(appExecutors) {
+            override fun saveCallResult(item: Unit) {
+
             }
 
             override fun shouldFetch(data: Product?) = true

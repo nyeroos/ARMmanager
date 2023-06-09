@@ -98,7 +98,7 @@ class CompleteRequestFragment : Fragment(), Injectable {
                     val position = viewHolder.adapterPosition
                     val request = adapter.currentList[position]
                     requestViewModel.deleteRequest(request)
-                    //adapter.removeItem(position)
+                    adapter.removeItem(position)
                 }
             }
         }

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import com.example.armmanager.vo.Product
 import com.example.armmanager.vo.Request
 import com.example.armmanager.vo.dto.AddProductDto
+import com.example.armmanager.vo.dto.AddRequestDto
+import com.example.armmanager.vo.dto.LoginDto
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -18,37 +20,20 @@ interface ArmService {
     @POST("")
     fun createProduct(name: String): LiveData<ApiResponse<Product>>
 
-    @GET("users/{login}/repos")
-    fun getProduct(@Path("login") login: String): LiveData<ApiResponse<List<Product>>>
+    @POST("users/login")
+    fun login(@Body request: LoginDto):Call<Unit>
 
-    @PUT("requests/{id}")
-    suspend fun updateRequest(@Path("id") id: Int, @Body request:Request): Response<Request>
-
-    @GET("repos/{owner}/{name}")
-    fun getRepo(
-        @Path("owner") owner: String,
-        @Path("name") name: String
-    ): LiveData<ApiResponse<Request>>
-
-//    @GET("repos/{owner}/{name}/contributors")
-//    fun getContributors(
-//        @Path("owner") owner: String,
-//        @Path("name") name: String
-//    ): LiveData<ApiResponse<List<Contributor>>>
-
-    @GET("search/repositories")
-    fun searchRepos(@Query("q") query: String): LiveData<ApiResponse<RequestProductResponse>>
-
-    @GET("search/repositories")
-    fun searchRepos(@Query("q") query: String, @Query("page") page: Int): Call<RequestProductResponse>
+    @PUT("request/{id}")
+    fun updateRequest(@Path("id") id: Int, @Body request:Request): LiveData<ApiResponse<Request>>
 
     @GET("request/all")
     fun getAllRequest():LiveData<ApiResponse<List<Request>>>
-
+    @POST("request/add")
+    fun addRequest(@Body request: AddRequestDto): LiveData<ApiResponse<Unit>>
+    @DELETE("request/{id}")
+    fun deleteRequest(@Path("id") id: Int): LiveData<ApiResponse<Unit>>
     @POST("products/add")
-    fun addProduct(@Body productName: AddProductDto): LiveData<ApiResponse<Product>>
-
-
+    fun addProduct(@Body productName: AddProductDto): LiveData<ApiResponse<Unit>>
     @GET("products/all")
     fun getAllProducts():LiveData<ApiResponse<List<Product>>>
 }

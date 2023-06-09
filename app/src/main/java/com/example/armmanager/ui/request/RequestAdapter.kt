@@ -39,7 +39,7 @@ class RequestAdapter: ListAdapter<Request, RequestAdapter.RequestViewHolder>(Req
 
     fun removeItem(position: Int) {
         val currentList = currentList.toMutableList()
-        //currentList.removeAt(position)
+        currentList.removeAt(position)
         submitList(currentList)
     }
 

@@ -1,4 +1,4 @@
-package com.example.armmanager.ui.add
+package com.example.armmanager.ui.request.add
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/addRequestFragment"
-        android:name="com.example.armmanager.ui.add.AddRequestFragment"
+        android:name="com.example.armmanager.ui.request.add.AddRequestFragment"
         android:label="Добавить заявку"
         tools:layout="@layout/add_request"
         />
     <fragment
         android:id="@+id/editRequestFragment"
-        android:name="com.example.armmanager.ui.edit.EditRequestFragment"
+        android:name="com.example.armmanager.ui.request.edit.EditRequestFragment"
         android:label="Редактировать"
         tools:layout="@layout/add_request"/>
 

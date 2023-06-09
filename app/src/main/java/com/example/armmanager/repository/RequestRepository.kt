@@ -1,18 +1,13 @@
 package com.example.armmanager.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.armmanager.AppExecutors
-import com.example.armmanager.database.ArmRoomDatabase
+import com.example.armmanager.api.ArmService
 import com.example.armmanager.database.RequestDAO
+import com.example.armmanager.util.AbsentLiveData
 import com.example.armmanager.vo.Request
 import com.example.armmanager.vo.Resource
-import android.content.Context
-import com.example.armmanager.api.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.armmanager.vo.dto.AddRequestDto
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -53,28 +48,54 @@ class RequestRepository @Inject constructor(
         }.asLiveData()
     }
 
-    suspend fun insertRequest(request: Request) {
-        //Отправка запроса на сервер, при положительном ответе вставка в БД. Либо вызов обновления всего списка с сервера
+    fun createRequest(
+        requestNumber: Int, requestName: String, customer: String, expectedDate: String,
+        creationDate: String, actualDate: String, user: Int, status: String
+    ): LiveData<Resource<Request>> {
+        return object : NetworkBoundResource<Request, Unit>(appExecutors) {
+            override fun saveCallResult(item: Unit) {
 
-        requestDAO.insert(request)
+            }
+
+            override fun shouldFetch(data: Request?) = true
+
+            override fun loadFromDb() = AbsentLiveData.create<Request>()
+
+            override fun createCall() = armService.addRequest(
+                AddRequestDto(
+                    requestNumber, requestName, customer,
+                    expectedDate, creationDate, actualDate,  status
+                )
+            )
+        }.asLiveData()
     }
 
-    suspend fun updateRequest(request: Request) {
-        //Отправка запроса на сервер, при положительном ответе обновление записи в БД. Либо вызов обновления всего списка с сервера
+    fun updateRequest(request: Request): LiveData<Resource<Request>> {
+        return object : NetworkBoundResource<Request, Request>(appExecutors) {
+            override fun saveCallResult(item: Request) {
 
-        requestDAO.update(request)
+            }
 
+            override fun shouldFetch(data: Request?) = true
+
+            override fun loadFromDb() = AbsentLiveData.create<Request>()
+
+            override fun createCall() = armService.updateRequest(request.id, request)
+        }.asLiveData()
     }
 
-    suspend fun getRequestCount(): Int {
-        return requestDAO.getRequestCount()
+    fun deleteRequest(request: Request): LiveData<Resource<Unit>> {
+        return object : NetworkBoundResource<Unit, Unit>(appExecutors) {
+            override fun saveCallResult(item: Unit) {
+
+            }
+
+            override fun shouldFetch(data: Unit?) = true
+
+            override fun loadFromDb() = AbsentLiveData.create<Unit>()
+
+            override fun createCall() = armService.deleteRequest(request.id)
+        }.asLiveData()
     }
 
-    suspend fun deleteRequest(request: Request){
-        return requestDAO.deleteRequest(request)
-    }
-
-    suspend fun deleteAll() {
-        requestDAO.deleteAll()
-    }
 }

@@ -1,9 +1,10 @@
 package com.example.armmanager.di
 
 import com.example.armmanager.ui.account.AccountFragment
-import com.example.armmanager.ui.add.AddProductDialogFragment
-import com.example.armmanager.ui.add.AddRequestFragment
-import com.example.armmanager.ui.edit.EditRequestFragment
+import com.example.armmanager.ui.auth.AuthorizationFragment
+import com.example.armmanager.ui.request.add.AddProductDialogFragment
+import com.example.armmanager.ui.request.add.AddRequestFragment
+import com.example.armmanager.ui.request.edit.EditRequestFragment
 import com.example.armmanager.ui.request.complete.CompleteRequestFragment
 import com.example.armmanager.ui.request.work.WorkRequestFragment
 import com.example.armmanager.ui.product.ProductFragment
@@ -34,6 +35,8 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeEditRequestFragment(): EditRequestFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeAuthorizationFragment(): AuthorizationFragment
 
 //    @ContributesAndroidInjector
 //    abstract fun contributeSearchFragment(): SearchFragment
